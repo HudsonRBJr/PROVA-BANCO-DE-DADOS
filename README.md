@@ -86,6 +86,9 @@ Relaçoes(1,n)
 
 ## MODELAGEM CONCEITUAL.
 
+<img src="./imagens/![Uploading brModelo 06_06_2024 21_09_34.png…]()
+" width="100%" />
+
 
 
   
