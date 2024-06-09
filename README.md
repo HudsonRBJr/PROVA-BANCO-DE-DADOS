@@ -86,21 +86,68 @@ Relaçoes(1,n)
 
 ## MODELAGEM CONCEITUAL.
 
-<img src="./imagens/![Uploading brModelo 06_06_2024 21_09_34.png…]()
-" width="100%" />
+![image](https://github.com/HudsonRBJr/PROVA-BANCO-DE-DADOS/assets/162808613/b4802430-f668-4a59-8c26-65acb39081ca)
 
 
-
-  
-
-
+## MODELAGEM LOGICA.
+![image](https://github.com/HudsonRBJr/PROVA-BANCO-DE-DADOS/assets/162808613/9c0fbdd4-ed78-402e-acf9-9c7c90f7cbd6)
 
 
-
-
-  
-
-
+## Codigo Utilizado no SQL
 ```sql
+-- Criação da tabela Editora
+CREATE TABLE Editora (
+    EditoraID INT PRIMARY KEY IDENTITY(1,1),
+    Nome NVARCHAR(100) NOT NULL,
+    Endereco NVARCHAR(255),
+    Telefone NVARCHAR(20),
+    Email NVARCHAR(100),
+    Website NVARCHAR(255)
+);
+
+-- Criação da tabela Categoria
+CREATE TABLE Categoria (
+    CategoriaID INT PRIMARY KEY IDENTITY(1,1),
+    Descricao NVARCHAR(255) NOT NULL
+);
+
+-- Criação da tabela Livro
+CREATE TABLE Livro (
+    LivroID INT PRIMARY KEY IDENTITY(1,1),
+    Titulo NVARCHAR(255) NOT NULL,
+    Autor NVARCHAR(100) NOT NULL,
+    AnoPublicacao INT,
+    EditoraID INT,
+    CategoriaID INT,
+    Preco DECIMAL(10, 2),
+    ISBN NVARCHAR(20),
+    QuantidadeEstoque INT,
+    FOREIGN KEY (EditoraID) REFERENCES Editora(EditoraID),
+    FOREIGN KEY (CategoriaID) REFERENCES Categoria(CategoriaID)
+);
+
+-- Criação da tabela Usuario
+CREATE TABLE Usuario (
+    UsuarioID INT PRIMARY KEY IDENTITY(1,1),
+    Nome NVARCHAR(100) NOT NULL,
+    Endereco NVARCHAR(255),
+    Telefone NVARCHAR(20),
+    Email NVARCHAR(100),
+    DataNascimento DATE,
+    DataCadastro DATETIME DEFAULT GETDATE()
+);
+
+-- Criação da tabela Emprestimo
+CREATE TABLE Emprestimo (
+    EmprestimoID INT PRIMARY KEY IDENTITY(1,1),
+    DataEmprestimo DATETIME NOT NULL,
+    DataDevolucao DATETIME,
+    UsuarioID INT,
+    LivroID INT,
+    Multa DECIMAL(10, 2),
+    FOREIGN KEY (UsuarioID) REFERENCES Usuario(UsuarioID),
+    FOREIGN KEY (LivroID) REFERENCES Livro(LivroID)
+);
+
 
 ```
