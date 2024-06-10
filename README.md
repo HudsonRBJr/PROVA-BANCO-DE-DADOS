@@ -1,4 +1,7 @@
 # PROVA-BANCO-DE-DADOS.
+Aluno:Hudson Ribeiro Barbara Junior. <br>
+Curso: DSM 1 Semestre. <br>
+Onde: Fatec Franca-Sp <br>
 
 
 ## CENARIO
@@ -362,4 +365,220 @@ VALUES
 
 ## 6 CRUD
 
-### Selec Into Do 
+### Select From Categoria
+```sql
+
+SELECT * FROM Categoria;
+```
+![image](https://github.com/HudsonRBJr/PROVA-BANCO-DE-DADOS/assets/162808613/ed64b564-1ddf-449b-b4d1-6be565a45966)
+![image](https://github.com/HudsonRBJr/PROVA-BANCO-DE-DADOS/assets/162808613/31a4ec49-4666-41a1-bc5d-5c47865b2c86) <br>
+
+### Insert Into Categoria
+```sql
+INSERT INTO Categoria (Descricao)
+VALUES ('Descrição da Categoria');
+
+```
+
+### Select From Categoria Depois Da Inserçao
+```sql
+SELECT * FROM Categoria;
+```
+![image](https://github.com/HudsonRBJr/PROVA-BANCO-DE-DADOS/assets/162808613/afb9ad98-dcaf-41fc-a65a-9bfd59f6d682) <br>
+
+### Update Categoria
+```sql
+UPDATE Categoria
+SET Descricao = 'CocoMole'
+WHERE CategoriaID = 1;
+
+```
+### Select From Categoria Depois Da Atualizaçao
+```sql
+SELECT * FROM Categoria;
+```
+![image](https://github.com/HudsonRBJr/PROVA-BANCO-DE-DADOS/assets/162808613/eb36f1eb-5796-4ac4-95ef-b9dc68ace343) <br>
+
+
+### Delete From Categoria:
+```sql
+DELETE FROM Categoria WHERE CategoriaID = 1;
+```
+
+### Select From Categoria Depois De Deletar
+```sql
+SELECT * FROM Categoria;
+```
+![image](https://github.com/HudsonRBJr/PROVA-BANCO-DE-DADOS/assets/162808613/ea94951a-9bc9-4ced-b007-4b3b54642e19) <br>
+
+
+## 7 Relatorios
+
+### 1. Consulta: Exibir as bibliotecas junto com seus administradores
+```sql
+SELECT 
+    b.BibliotecaID, 
+    b.Nome AS BibliotecaNome, 
+    a.AdministradorID, 
+    a.Nome AS AdministradorNome 
+FROM 
+    Biblioteca b
+JOIN 
+    Administrador a ON b.BibliotecaID = a.BibliotecaID;
+
+
+```
+![image](https://github.com/HudsonRBJr/PROVA-BANCO-DE-DADOS/assets/162808613/0c7d9bf1-bd1d-40d5-8a2d-1863c92a25fc) <br>
+Exlpicaçao:Explicação: Esta consulta usa um JOIN para combinar dados das tabelas Biblioteca e Administrador, exibindo o ID e nome de cada biblioteca junto com o ID e nome do administrador correspondente. <br>
+
+### 2. Consulta: Exibir todos os empréstimos realizados em um determinado mês
+```sql
+SELECT E.EmprestimoID, U.Nome, L.Titulo, E.DataEmprestimo, E.DataDevolucao
+FROM Emprestimo E
+JOIN Usuario U ON E.UsuarioID = U.UsuarioID
+JOIN Livro L ON E.LivroID = L.LivroID
+WHERE MONTH(E.DataEmprestimo) = 6 AND YEAR(E.DataEmprestimo) = 2024
+ORDER BY E.DataEmprestimo;
+
+```
+![image](https://github.com/HudsonRBJr/PROVA-BANCO-DE-DADOS/assets/162808613/19d4769e-08ba-4ba7-9003-658be6868002) <br>
+
+Explicação: Esta consulta exibe todos os empréstimos realizados no mês de junho de 2024, ordenados pela data de empréstimo. <br>
+
+### 3. Consulta: Exibir todos os usuários que pegaram emprestado um livro específico
+```sql
+SELECT U.Nome, U.Email, E.DataEmprestimo, E.DataDevolucao
+FROM Usuario U
+JOIN Emprestimo E ON U.UsuarioID = E.UsuarioID
+WHERE E.LivroID = 1;
+```
+![image](https://github.com/HudsonRBJr/PROVA-BANCO-DE-DADOS/assets/162808613/a1a08d6e-2d3c-464b-a46f-d2d714d4fa11) <br>
+
+### 4. Consulta:Listar bibliotecas e administradores com telefones começando com '9'
+```sql
+SELECT 
+    b.BibliotecaID, 
+    b.Nome AS BibliotecaNome, 
+    a.AdministradorID, 
+    a.Nome AS AdministradorNome 
+FROM 
+    Biblioteca b
+JOIN 
+    Administrador a ON b.BibliotecaID = a.BibliotecaID
+WHERE 
+    b.Telefone LIKE '9%' OR a.Telefone LIKE '9%';
+
+```
+![image](https://github.com/HudsonRBJr/PROVA-BANCO-DE-DADOS/assets/162808613/2e13250d-a89a-4671-9c8c-557e4723951b) <br>
+Explicaçao: Esta consulta usa JOIN e LIKE para filtrar bibliotecas e administradores cujo telefone começa com '9'. <br>
+
+### 5. Consulta:Contar o número de bibliotecas
+```sql
+SELECT 
+    COUNT(*) AS TotalBibliotecas 
+FROM 
+    Biblioteca;
+
+```
+![image](https://github.com/HudsonRBJr/PROVA-BANCO-DE-DADOS/assets/162808613/e0d27888-be6d-426a-8eb3-98fcef882337) <br>
+
+Explicaçao:Esta Dizendo O total De Dados Na Biblioteca. <br>
+### 6. Consulta:Exibir os usuários que devolveram livros com atraso
+```sql
+SELECT U.Nome, U.Email, E.DataEmprestimo, E.DataDevolucao, E.Multa
+FROM Usuario U
+JOIN Emprestimo E ON U.UsuarioID = E.UsuarioID
+WHERE E.Multa > 0;
+
+```
+![image](https://github.com/HudsonRBJr/PROVA-BANCO-DE-DADOS/assets/162808613/fee758b8-5b3e-4372-9892-3a0e00a97273) <br>
+
+Explicação: Esta consulta mostra os usuários que devolveram livros com atraso (têm multa) junto com as datas de empréstimo e devolução e o valor da multa. <br>
+
+### 7. Consulta:Exibir todos os livros emprestados por um usuário específico ordenados por data de empréstimo
+```sql
+SELECT L.Titulo, L.Autor, E.DataEmprestimo, E.DataDevolucao
+FROM Livro L
+JOIN Emprestimo E ON L.LivroID = E.LivroID
+WHERE E.UsuarioID = 1
+ORDER BY E.DataEmprestimo DESC;
+
+
+```
+
+![image](https://github.com/HudsonRBJr/PROVA-BANCO-DE-DADOS/assets/162808613/10a949d8-804e-4cb7-8978-641c55d3b03c)
+Explicação: Esta consulta mostra todos os livros emprestados pelo usuário com UsuarioID = 1, ordenados pela data de empréstimo em ordem decrescente. <br>
+
+### 8. Consulta: Ordenar administradores por nome em ordem decrescente
+```sql
+
+SELECT 
+    AdministradorID, 
+    Nome, 
+    Endereco, 
+    Telefone, 
+    Email, 
+    BibliotecaID 
+FROM 
+    Administrador
+ORDER BY 
+    Nome DESC;
+
+
+
+```
+
+![image](https://github.com/HudsonRBJr/PROVA-BANCO-DE-DADOS/assets/162808613/5f7cb130-2205-4e06-a43c-f0ea31cc19a5) <br>
+Explicação: Esta consulta seleciona todos os administradores e os ordena pelo nome em ordem decrescente. <br>
+
+### 9. Consulta:Ordenar bibliotecas por nome
+```sql
+SELECT 
+    BibliotecaID, 
+    Nome, 
+    Endereco, 
+    Telefone, 
+    Email 
+FROM 
+    Biblioteca
+ORDER BY 
+    Nome;
+
+```
+![image](https://github.com/HudsonRBJr/PROVA-BANCO-DE-DADOS/assets/162808613/1af5bf3a-7427-4797-8a42-8b0b885cf7b1) <br>
+Explicação: Esta consulta seleciona todas as bibliotecas e as ordena pelo nome em ordem alfabética. <br>
+
+### 10. Consulta:Exibir a biblioteca e o administrador mais recente
+```sql
+SELECT TOP 1 
+    b.BibliotecaID, 
+    b.Nome AS BibliotecaNome, 
+    a.AdministradorID, 
+    a.Nome AS AdministradorNome 
+FROM 
+    Biblioteca b
+JOIN 
+    Administrador a ON b.BibliotecaID = a.BibliotecaID
+ORDER BY 
+    b.BibliotecaID DESC;
+
+```
+
+![image](https://github.com/HudsonRBJr/PROVA-BANCO-DE-DADOS/assets/162808613/9fbdc2ea-57d5-4474-bce3-19a15354636e) <br>
+
+Explicação: Esta consulta usa JOIN e TOP 1 para exibir a biblioteca e o administrador mais recente, ordenando por BibliotecaID em ordem decrescente. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
